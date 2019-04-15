@@ -1,0 +1,50 @@
+{
+	"manifest_version": 2,
+
+	"name": "Tweet my Googles",
+	"description": "A simple extension that posts your Google searches to Twitter in realtime.",
+	"version": "0.5",
+	"icons": {
+		"128": "img/icon_128.png",
+		"48": "img/icon_48.png",
+		"32": "img/icon_32.png",
+		"16": "img/icon_16.png"
+	},
+
+	"background": {
+		"page": "background.html"
+	},
+
+	"content_scripts": [ {
+		"matches": [
+			"*://*.google.com/*",
+			"*://*.google.co.uk/*",
+			"*://*.google.nl/*",
+			"*://*.google.de/*",
+			"*://*.google.fr/*",
+			"*://*.google.be/*"
+		],
+		"js": [
+			"js/jquery.min.js",
+			"js/codebird.js",
+			"content.js"
+		]
+	} ],
+
+	"options_page": "options.html",
+
+	"web_accessible_resources": [
+		"img/twitter.png",
+		"css/popup.css"
+	],
+
+	"permissions": [
+		"storage",
+		"https://ssl.google-analytics.com/*",
+		"https://upload.twitter.com/*",
+		"https://api.twitter.com/*",
+		"https://api.jublo.net/*"
+	],
+
+	"content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
+}

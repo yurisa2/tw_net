@@ -1,0 +1,16 @@
+{
+	"filters": [
+		"gain",
+		"my favorite",
+		"your favorite",
+		"vote"
+	],
+	"userfilters": [
+	],
+	"dice": {
+		"media": 1.0,
+		"urls": 1.0,
+		"mentions": 0.0,
+		"base": 1.0
+	}
+}

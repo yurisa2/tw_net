@@ -215,8 +215,6 @@ class MarkovBot {
 
         echo "aWords";
         var_dump($aWords);
-        echo "aWords";
-        var_dump($aWords);
 
         foreach ($aWords as $i => $sWord) {
             if (!empty($aWords[$i + 2])) {

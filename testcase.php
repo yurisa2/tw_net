@@ -4,31 +4,31 @@ include "include/db/conn.php";
 
 echo "<pre>";
 
-$lStart = microtime(TRUE);
-
 $filename = "testfilea";
 $file_string = file_get_contents($filename);
 
 
 
+function explode_words_into_db($string) {
+  global $file_db;
 
-$aWords = explode(" ",$file_string,1000);
+  $aWords = explode(" ",$string);
 
-foreach ($aWords as $key => $value) {
-  var_dump($value);
+  $insert = "insert into words ('word','set') values ";
 
-// if last item, put it
-  if($key == (count($aWords)-2)) {
-    file_put_contents($filename,end($aWords));
-    break;
+  foreach ($aWords as $key => $value) {
+    // var_dump($value);
+    $insert .= "('".$value."','test'), ";
   }
 
-  //Deletes file if only one word
-  if(count(explode(" ",$file_string,100)) == 1) unlink($filename);
+  $insert .= "('','')";
+
+  var_dump($insert);
+
+  $stmt = $file_db->prepare($insert);
+  $stmt->execute();
 }
 
-echo "Tempo: ". (microtime(TRUE) - $lStart);
-
-
+explode_words_into_db($file_string);
 
 ?>

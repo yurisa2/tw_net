@@ -213,7 +213,10 @@ class MarkovBot {
         $lStart = microtime(TRUE);
         $aWords = str_word_count($sInput, 1, '\'"-,.;:0123456789%?!');
 
-        // var_dump($aWords);
+        echo "aWords";
+        var_dump($aWords);
+        echo "aWords";
+        var_dump($aWords);
 
         foreach ($aWords as $i => $sWord) {
             if (!empty($aWords[$i + 2])) {
@@ -222,7 +225,8 @@ class MarkovBot {
         }
         printf("- done, generated %d chains in %.3f seconds\n\n", count($aMarkovChains), microtime(TRUE) - $lStart);
 
-        // var_dump($aMarkovChains);
+        echo "aMarkovChains";
+        var_dump($aMarkovChains);
 
         return $aMarkovChains;
     }
@@ -316,85 +320,6 @@ class MarkovBot {
 		return $sTweet;
     }
 
-    private function getRecord() {
-
-		echo "Getting random record from database..\n";
-
-		if (!defined('DB_HOST') || !defined('DB_NAME') ||
-			!defined('DB_USER') || !defined('DB_PASS')) {
-
-			$this->logger(2, 'MySQL database credentials missing.');
-			$this->halt('- One or more of the MySQL database credentials are missing, halting.');
-			return FALSE;
-		}
-
-        //connect to database
-		try {
-			$this->oPDO = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
-		} catch(Exception $e) {
-			$this->logger(2, sprintf('Database connection failed. (%s)', $e->getMessage()));
-			$this->halt(sprintf('- Database connection failed. (%s)', $e->getMessage()));
-			return FALSE;
-		}
-
-		if (empty($this->aDbSettings) || empty($this->aDbSettings['sTable']) || empty($this->aDbSettings['sIdCol']) ||
-			empty($this->aDbSettings['sCounterCol']) || empty($this->aDbSettings['sTimestampCol'])) {
-
-			$this->logger(2, 'Database table settings missing.');
-			$this->halt('- One or more of the database table settings are missing, halting.');
-			return FALSE;
-		}
-
-        //fetch random record out of those with the lowest counter value
-        $sth = $this->oPDO->prepare(sprintf('
-            SELECT *
-            FROM %1$s
-            WHERE %2$s = (
-                SELECT MIN(%2$s)
-                FROM %1$s
-            )
-            ORDER BY RAND()
-            LIMIT 1',
-            $this->aDbSettings['sTable'],
-            $this->aDbSettings['sCounterCol']
-        ));
-
-		if ($sth->execute() == FALSE) {
-			$this->logger(2, sprintf('Select query failed. (%d %s)', $sth->errorCode(), $sth->errorInfo()));
-			$this->halt(sprintf('- Select query failed, halting. (%d %s)', $sth->errorCode(), $sth->errorInfo()));
-			return FALSE;
-		}
-
-        if ($aRecord = $sth->fetch(PDO::FETCH_ASSOC)) {
-            printf("- Found record that has been posted %d times before.\n", $aRecord['postcount']);
-
-            //update record with postcount and timestamp of last post
-            $sth = $this->oPDO->prepare(sprintf('
-                UPDATE %1$s
-                SET %3$s = %3$s + 1,
-                    %4$s = NOW()
-                WHERE %2$s = :id
-                LIMIT 1',
-                $this->aDbSettings['sTable'],
-                $this->aDbSettings['sIdCol'],
-                $this->aDbSettings['sCounterCol'],
-                $this->aDbSettings['sTimestampCol']
-            ));
-            $sth->bindValue(':id', $aRecord[$this->aDbSettings['sIdCol']], PDO::PARAM_INT);
-            if ($sth->execute() == FALSE) {
-                $this->logger(2, sprintf('Update query failed. (%d %s)', $stf->errorCode(), $sth->errorInfo()));
-                $this->halt(sprintf('- Update query failed, halting. (%d %s)', $sth->errorCode(), $sth->errorInfo()));
-                return FALSE;
-            }
-
-            return $aRecord;
-
-        } else {
-            $this->logger(3, 'Query yielded no results. (%d %s)', $sth->errorCode(), $sth->errorInfo());
-            $this->halt(sprintf('- Select query yielded no records, halting. (%d %s)', $sth->errorCode, $sth->errorInfo()));
-            return FALSE;
-        }
-    }
 
     private function generateTweet() {
 
@@ -433,7 +358,7 @@ class MarkovBot {
     private function postMessage($sTweet) {
 
         //tweet
-        $oRet = $this->oTwitter->post('statuses/update', array('status' => $sTweet, 'trim_users' => TRUE));
+        // $oRet = $this->oTwitter->post('statuses/update', array('status' => $sTweet, 'trim_users' => TRUE));
         printf("- TWEET: %s\n", $sTweet);
         if (isset($oRet->errors)) {
             $this->logger(2, sprintf('Twitter API call failed: statuses/update (%s)', $oRet->errors[0]->message), array('tweet' => $sTweet));

@@ -1,0 +1,45 @@
+{
+    "formats": {
+        "Today is :name :url": {
+            "country": false,
+            "region": false,
+            "note": false
+        },
+        "Today is :name in :country :url": {
+            "country": true,
+            "region": false,
+            "note": false
+        },
+        "Today is :name in :region :url": {
+            "country": false,
+            "region": true,
+            "note": false
+        },
+        "Today is :name in :region (:country) :url": {
+            "country": true,
+            "region": true,
+            "note": false
+        },
+        "Today, :name is celebrated by :note :url": {
+            "country": false,
+            "region": false,
+            "note": true
+        },
+        "Today, :name is celebrated by :note in :country :url": {
+            "country": true,
+            "region": false,
+            "note": true
+        },
+        "Today, :name is celebrated by :note in :region (:country) :url": {
+            "country": true,
+            "region": true,
+            "note": true
+        }
+    },
+    "lastrun": {
+        "date": "2017-03-28",
+        "posted": [
+            "87057257466e901001372feb4385d18664fbe1b6"
+        ]
+    }
+}

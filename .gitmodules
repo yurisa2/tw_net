@@ -1,1 +1,3 @@
-
+[submodule "include/twitterbot"]
+	path = include/twitterbot
+	url = ../../mrbellek/twitterbot.git

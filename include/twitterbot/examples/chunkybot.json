@@ -1,0 +1,14 @@
+{
+	"filters": [
+		"@chunkybot",
+		"cloudyapples",
+		"pizza-cake",
+		"ice cream man"
+	],
+	"dice": {
+		"media": 1.0,
+		"urls": 0.8,
+		"mentions": 0.5,
+		"base": 0.7
+	}
+}

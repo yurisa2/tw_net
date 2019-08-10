@@ -1,0 +1,29 @@
+{
+	"filters": [
+		"@iwantabot",
+		"#bot",
+		"twitch",
+		"toothbrush",
+		"@youtube", "youtube",
+		"hug bot", "hugbotph",
+		"gamergate", "block bot",
+		"retweeted", "rted",
+		"yahoo pipes", "yahoo! pipes",
+		"better bot",
+		"spreadsheet",
+		"10sphere",
+        "under an hour"
+	],
+	"userfilters": [
+		"bot", "b0t",
+		"ebook",
+		"worst_user",
+		"youtube"
+	],
+	"dice": {
+		"media": 1.0,
+		"urls": 1.0,
+		"mentions": 1.0,
+		"base": 1.0
+	}
+}

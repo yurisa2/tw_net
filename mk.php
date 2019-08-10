@@ -1,23 +1,25 @@
 <?php
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+echo '3';
 
-$prefix_path = "include/twitterbot/";
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
 
-define("CONSUMER_KEY", "7w3pZVva85bQjNO4k6moZWmIs");
-define("CONSUMER_SECRET", "DEvAz6e3691uQ0YN1AZTTl6YhyfUUUTGxuAii3hXyTjMkAPbde");
+ ini_set('display_startup_errors', 1);
+ ini_set('display_errors', 1);
+ error_reporting(E_ALL);
 
-define("ACCESS_TOKEN", "1104397298774220800-qqqm7o8ogXCfScKOdG9mfYaaD6wu1Z");
-define("ACCESS_TOKEN_SECRET", "ee37ej6EURLBMmuCcdGv4tObitOs7gqPe6q5NeNqH6Jl8");
+ include 'include/include_all.php';
 
-define("MYPATH","/home/yurisa2/lampstack-5.6.22-0/apache2/htdocs/tw_net/");
+$files = glob('origins/*');
+$file = array_rand($files);
 
-require_once($prefix_path.'markovbot.php');
+var_dump($files[$file]);
 
 
 $oTwitterBot = new MarkovBot(array(
-	'sUsername'			=> 'BengoWengo',
-	'sInputFile'	=> 'testfile',
+	'sUsername'			=> USERNAME,
+	'sInputFile'	=> $files[$file],
 	'sInputType'	=> 'generate'
 
 ));

@@ -4,26 +4,26 @@
  error_reporting(E_ALL);
  echo "oi2-";
 
+// REFACTOR WITH INCLUDES
 
 $prefix_path = "include/twitterbot/";
-
-DEFINE("CONSUMER_KEY", "");
-DEFINE("CONSUMER_SECRET", "");
-
-DEFINE("ACCESS_TOKEN", "");
-DEFINE("ACCESS_TOKEN_SECRET", "");
-
-define("MYPATH","C:\\Bitnami\\wampstack-7.1.28-0\\apache2\\htdocs\\tw_net");
 
 require_once('include/twitterbot/retweetbot.php');
 
 echo "oi3";
 
 $oTwitterBot = new RetweetBot(array(
-	'sUsername'			=> 'yurisa2',
+	'sUsername'			=> 'BengoWengo',
 	'aSearchStrings'	=> array(
-		1 => 'fuzzy logic',
-		2 => 'zadeh'
+		1 => 'erviegas',
+		2 => 'easypath',
+		3 => 'acqualife',
+		4 => 'markov',
+		5 => 'fuzzy logic',
+		6 => 'myr',
+		7 => 'patologia',
+		8 => 'cancer',
+		9 => 'unesp'
 	),
 ));
 

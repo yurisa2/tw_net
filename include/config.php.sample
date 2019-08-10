@@ -1,0 +1,20 @@
+<?php
+
+$prefix_path = "include/twitterbot/";
+$consumer_key = "";
+$consumer_secret = "";
+$access_token = "-qqqm7o8ogXCfScKOdG9mfYaaD6wu1Z";
+$access_token_secret = "";
+$username = "";
+
+DEFINE("CONSUMER_KEY", $consumer_key);
+DEFINE("CONSUMER_SECRET",$consumer_secret );
+
+DEFINE("ACCESS_TOKEN", $access_token);
+DEFINE("ACCESS_TOKEN_SECRET", $access_token_secret);
+
+DEFINE("MYPATH",getcwd());
+DEFINE("USERNAME",$username);
+
+
+?>

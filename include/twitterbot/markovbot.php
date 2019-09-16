@@ -180,9 +180,9 @@ class MarkovBot {
                 return FALSE;
             }
         } else {
-            $this->logger(2, sprintf('Twitter API call failed: GET account/verify_credentials (%s)', $oCurrentUser->errors[0]->message));
-            $this->halt(sprintf('- Call failed, halting. (%s)', $oCurrentUser->errors[0]->message));
-            return FALSE;
+            // $this->logger(2, sprintf('Twitter API call failed: GET account/verify_credentials (%s)', $oCurrentUser->errors[0]->message));
+            // $this->halt(sprintf('- Call failed, halting. (%s)', $oCurrentUser->errors[0]->message));
+            return TRUE;
         }
 
         return TRUE;
@@ -213,7 +213,7 @@ class MarkovBot {
         $lStart = microtime(TRUE);
         $aWords = str_word_count($sInput, 1, '\'"-,.;:0123456789%?!');
 
-        // var_dump($aWords);
+        var_dump($aWords);
 
         foreach ($aWords as $i => $sWord) {
             if (!empty($aWords[$i + 2])) {
@@ -222,7 +222,7 @@ class MarkovBot {
         }
         printf("- done, generated %d chains in %.3f seconds\n\n", count($aMarkovChains), microtime(TRUE) - $lStart);
 
-        // var_dump($aMarkovChains);
+        var_dump($aMarkovChains);
 
         return $aMarkovChains;
     }

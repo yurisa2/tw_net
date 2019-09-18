@@ -9,6 +9,6 @@ include __DIR__."/include/include_all.php";
 
 echo '<pre>';
 $markov = new Markov;
-$markov->generateText();
+var_dump($markov->generateText());
 
  ?>

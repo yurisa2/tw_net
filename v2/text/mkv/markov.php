@@ -4,45 +4,23 @@ use Stringy\Stringy as S;
 class Markov  {
 
   public function generateMarkovChainsWords($sInput, $set) {
-    global $file_db; //temp
 
     // $aWords = str_word_count($sInput, 1, '\'"-,.;:0123456789%?!');
     $aWords = explode(" ",$sInput);
 
-    // var_dump($aWords);
-
-    $insert = "INSERT INTO mkv_words (mkv_seq,next_word,`set`) VALUES ";
-
-     // $insert_values = array();
-
-    $file_db->beginTransaction();
+    $aMarkovChains = array();
     foreach ($aWords as $i => $sWord) {
       if (!empty($aWords[$i + 2])) {
-        $aMarkovChains[$sWord . ' ' . $aWords[$i + 1]][] = $aWords[$i + 2];
 
-        $mkv_seq = addslashes($sWord . ' ' . $aWords[$i + 1]);
-        $next_word = addslashes($aWords[$i + 2]);
+        // $aMarkovChains[$sWord . ' ' . $aWords[$i + 1]][] = $aWords[$i + 2];
+        $mkv_seq = $sWord . ' ' . $aWords[$i + 1];
+        $next_word = $aWords[$i + 2];
 
-         $insert_values .= "('".$mkv_seq."', '".$next_word."',' ".$set."'),";
-
-         if($j >= 400) {
-         $insert_values = substr_replace($insert_values ,"", -1);
-         $stmt = $file_db->prepare($insert.$insert_values);
-         $stmt->execute();
-         $insert_values = NULL;
-         $j = 0;
-       }
-       $j++;
+        $aMarkovChains[] = [ "mkv_seq" => $mkv_seq,
+                              "next_word" => $next_word,
+                              "set" => $set
+                            ];
       }
-    }
-
-    $file_db->commit();
-    // $insert_values = substr_replace($insert_values ,"", -1);
-
-    try{
-
-    } catch (Exception $e) {
-      echo 'Exceção capturada: ',  $e->getMessage(), "\n";
     }
 
     return $aMarkovChains;

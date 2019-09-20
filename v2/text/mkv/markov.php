@@ -11,10 +11,11 @@ class Markov  {
 
     // var_dump($aWords);
 
-    $insert = $file_db->prepare("INSERT INTO mkv_words (mkv_seq,next_word,`set`) VALUES (?, ?, ?) ;");
+    $insert = "INSERT INTO mkv_words (mkv_seq,next_word,`set`) VALUES ";
 
      // $insert_values = array();
 
+    $file_db->beginTransaction();
     foreach ($aWords as $i => $sWord) {
       if (!empty($aWords[$i + 2])) {
         $aMarkovChains[$sWord . ' ' . $aWords[$i + 1]][] = $aWords[$i + 2];
@@ -22,11 +23,20 @@ class Markov  {
         $mkv_seq = addslashes($sWord . ' ' . $aWords[$i + 1]);
         $next_word = addslashes($aWords[$i + 2]);
 
-        $insert->execute([$mkv_seq,$next_word,$set]);
+         $insert_values .= "('".$mkv_seq."', '".$next_word."',' ".$set."'),";
 
+         if($j >= 400) {
+         $insert_values = substr_replace($insert_values ,"", -1);
+         $stmt = $file_db->prepare($insert.$insert_values);
+         $stmt->execute();
+         $insert_values = NULL;
+         $j = 0;
+       }
+       $j++;
       }
     }
 
+    $file_db->commit();
     // $insert_values = substr_replace($insert_values ,"", -1);
 
     try{
@@ -91,6 +101,7 @@ class Markov  {
     for ($i=0; $i < 1000; $i++) {
 
       $sql_new_seq = 'SELECT * FROM mkv_words WHERE mkv_seq = "'.$new_seq.'" order by rand()';
+
       $data_sq = $file_db->query($sql_new_seq);
       $data_sq->setFetchMode(PDO::FETCH_ASSOC);
       $new_sq_data = $data_sq->fetch();

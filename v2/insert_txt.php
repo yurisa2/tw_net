@@ -1,7 +1,7 @@
 <?php
 ini_set("display_errors",1);
 ini_set('max_execution_time', 3600);
-
+error_reporting(E_ALL);
 
 include __DIR__."/include/include_all.php";
 
@@ -18,7 +18,7 @@ $input = $data->fetch();
 
 echo '<pre>';
 
-Markov::generateMarkovChainsWords($input["text"],$input["set"]." , porn, contoseroticos.com, portuguese");
+Markov::generateMarkovChainsWords($input["text"],$input["set"]);
 
 $sql_del = 'DELETE FROM txt where id = '.$input["id"] ;
 $data = $file_db->query($sql_del);

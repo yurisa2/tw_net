@@ -8,5 +8,6 @@ $baseDir = dirname($vendorDir);
 return array(
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
     'Stringy\\' => array($vendorDir . '/danielstjules/stringy/src'),
+    'JMathai\\PhpMultiCurl\\' => array($vendorDir . '/jmathai/php-multi-curl/src'),
     'Abraham\\TwitterOAuth\\' => array($vendorDir . '/abraham/twitteroauth/src'),
 );

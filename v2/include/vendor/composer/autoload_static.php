@@ -17,6 +17,10 @@ class ComposerStaticInit7f38d408a62fbdcd72b8e70ae720dedc
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Stringy\\' => 8,
         ),
+        'J' => 
+        array (
+            'JMathai\\PhpMultiCurl\\' => 21,
+        ),
         'A' => 
         array (
             'Abraham\\TwitterOAuth\\' => 21,
@@ -31,6 +35,10 @@ class ComposerStaticInit7f38d408a62fbdcd72b8e70ae720dedc
         'Stringy\\' => 
         array (
             0 => __DIR__ . '/..' . '/danielstjules/stringy/src',
+        ),
+        'JMathai\\PhpMultiCurl\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/jmathai/php-multi-curl/src',
         ),
         'Abraham\\TwitterOAuth\\' => 
         array (

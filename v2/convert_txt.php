@@ -18,7 +18,7 @@ $input = $data->fetch();
 
 echo '<pre>';
 
-Markov::generateMarkovChainsWords($input["text"],$input["set"]." , porn, contoseroticos.com, portuguese");
+Markov::generateMarkovChainsWords($input["text"],$input["set"]);
 
 $sql_del = 'DELETE FROM txt where id = '.$input["id"] ;
 $data = $file_db->query($sql_del);

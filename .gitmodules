@@ -1,3 +1,6 @@
 [submodule "include/twitterbot"]
 	path = include/twitterbot
 	url = ../../mrbellek/twitterbot.git
+[submodule "v2/include/vendor/jmathai/php-multi-curl"]
+	path = v2/include/vendor/jmathai/php-multi-curl
+	url = ../../jmathai/php-multi-curl.git

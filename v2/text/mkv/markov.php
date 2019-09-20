@@ -11,45 +11,29 @@ class Markov  {
 
     // var_dump($aWords);
 
-    $file_db->beginTransaction();
-    $insert = "INSERT INTO mkv_words ('mkv_seq','next_word','set') VALUES ";
+    $insert = $file_db->prepare("INSERT INTO mkv_words (mkv_seq,next_word,`set`) VALUES (?, ?, ?) ;");
 
-    $insert_values = NULL;
+     // $insert_values = array();
 
     foreach ($aWords as $i => $sWord) {
       if (!empty($aWords[$i + 2])) {
         $aMarkovChains[$sWord . ' ' . $aWords[$i + 1]][] = $aWords[$i + 2];
 
-        $insert_values .= "('".SQLite3::escapeString($sWord . ' ' . $aWords[$i + 1])."', '".SQLite3::escapeString($aWords[$i + 2])."', '".$set."'),";
-        // $insert_values .= "('".($sWord . ' ' . $aWords[$i + 1])."', '".($aWords[$i + 2])."', '".$set."'),";
+        $mkv_seq = addslashes($sWord . ' ' . $aWords[$i + 1]);
+        $next_word = addslashes($aWords[$i + 2]);
 
-        if($j >= 400) {
-          $insert_values = substr_replace($insert_values ,"", -1);
-          $stmt = $file_db->prepare($insert.$insert_values);
-          $stmt->execute();
-          $insert_values = NULL;
-          $j = 0;
-        }
-        $j++;
+        $insert->execute([$mkv_seq,$next_word,$set]);
+
       }
     }
 
-    $insert_values = substr_replace($insert_values ,"", -1);
+    // $insert_values = substr_replace($insert_values ,"", -1);
 
     try{
-      $stmt = $file_db->prepare($insert.$insert_values);
-      $stmt->execute();
-      $file_db->commit();
 
     } catch (Exception $e) {
       echo 'Exceção capturada: ',  $e->getMessage(), "\n";
-      $file_db->commit();
-
     }
-
-
-    // var_dump($aMarkovChains);
-    // var_dump($stmt);
 
     return $aMarkovChains;
   }
@@ -57,7 +41,11 @@ class Markov  {
   private function initialize_markov() {
     global $file_db;
 
-    $sql = 'SELECT * FROM mkv_words WHERE substr(mkv_seq, 1, 1) GLOB(\'[A-Z]\') order by random()';
+    // $sql = 'SELECT * FROM mkv_words WHERE substr(mkv_seq, 1, 1) GLOB(\'[A-Z]\') order by random()'; // Incluir limit e fallback if none
+    $sql = 'SELECT * FROM mkv_words WHERE SUBSTRING(mkv_seq, 1, 1) REGEXP BINARY \'[A-Z]\' order by rand()'; // Incluir limit e fallback if none
+
+
+
     $data = $file_db->query($sql);
     $data->setFetchMode(PDO::FETCH_ASSOC);
     $new_data = $data->fetch();
@@ -102,7 +90,7 @@ class Markov  {
 
     for ($i=0; $i < 1000; $i++) {
 
-      $sql_new_seq = 'SELECT * FROM mkv_words WHERE mkv_seq = "'.$new_seq.'" order by random()';
+      $sql_new_seq = 'SELECT * FROM mkv_words WHERE mkv_seq = "'.$new_seq.'" order by rand()';
       $data_sq = $file_db->query($sql_new_seq);
       $data_sq->setFetchMode(PDO::FETCH_ASSOC);
       $new_sq_data = $data_sq->fetch();

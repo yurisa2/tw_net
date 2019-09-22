@@ -71,7 +71,7 @@ class ConvertMkv {
       $this->sendChainsDB($insert,$insert_values);
       $this->db->conn->commit();
 
-      $input = $this->deleteTxt($input["id"]);
+      $input_delete = $this->deleteTxt($input["id"]);
 
     } while ($input["text"] != NULL);
 

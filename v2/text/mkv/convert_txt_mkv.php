@@ -3,9 +3,18 @@
 class ConvertMkv {
 
   function __construct() {
-
+    $this->start_time = microtime();
+    $this->txt_count = 0;
     $this->mkv = new Markov;
     $this->db = new DB;
+
+  }
+
+  function __destruct() {
+    $this->end_time = microtime();
+    $this->total_microtime = $this->end_time - $this->start_time;
+
+    echo "Converted $this->txt_count Chains in $this->total_microtime seconds";
 
   }
 
@@ -14,6 +23,8 @@ class ConvertMkv {
     $data = $this->db->conn->query($sql);
     $data->setFetchMode(PDO::FETCH_ASSOC);
     $input = $data->fetch();
+
+    if(!$input) exit("Err: Txt empty");
 
     return $input;
   }
@@ -30,11 +41,11 @@ class ConvertMkv {
   }
 
   public function iterTxt() {
+    $j = 0;
+    $insert_values = NULL;
 
     do {
-
       $input = $this->getTxt();
-
 
       $arr_mkv = $this->mkv->generateMarkovChains($input["text"],$input["set"]);
 
@@ -55,6 +66,7 @@ class ConvertMkv {
 
         }
         $j++;
+        $this->txt_count++;
       }
       $this->sendChainsDB($insert,$insert_values);
       $this->db->conn->commit();

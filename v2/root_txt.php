@@ -13,9 +13,10 @@ $shakes = addslashes(file_get_contents("ts.txt"));
 
 echo '<pre>';
 
+$db = new DB;
 
 $sql_del = 'INSERT into txt (`set`, `text`) values ("shakespeare, literature, books, english", ?)' ;
-$data = $file_db->prepare($sql_del);
+$data = $db->conn->prepare($sql_del);
 $data->execute(array($shakes));
 
 // var_dump($input);

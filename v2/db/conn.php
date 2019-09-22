@@ -1,13 +1,21 @@
 <?php
 
-$file = __DIR__."/text.db";
+class DB {
 
-$file_db = new PDO('mysql:host='.MYSQL_SERVER.';dbname='.MYSQL_DB,
+  public function __construct() {
+
+    $this->conn = new PDO('mysql:host='.MYSQL_SERVER.';dbname='.MYSQL_DB,
     MYSQL_USER,
-    MYSQL_PASS);
+    MYSQL_PASS,
+    array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8")
 
-$file_db->setAttribute(PDO::ATTR_ERRMODE,
-PDO::ERRMODE_EXCEPTION);
+  );
 
+      $this->conn->setAttribute(PDO::ATTR_ERRMODE,
+                                PDO::ERRMODE_EXCEPTION
+                              );
 
- ?>
+  }
+
+}
+?>

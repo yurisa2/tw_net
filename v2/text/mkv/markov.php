@@ -3,16 +3,18 @@ use Stringy\Stringy as S;
 
 class Markov  {
 
-  public function generateMarkovChainsWords($sInput, $set) {
+  function __construct() {
+    $this->db = new DB;
+    $this->set = '';
+  }
 
-    // $aWords = str_word_count($sInput, 1, '\'"-,.;:0123456789%?!');
+  public function generateMarkovChains($sInput, $set) {
     $aWords = explode(" ",$sInput);
 
     $aMarkovChains = array();
     foreach ($aWords as $i => $sWord) {
       if (!empty($aWords[$i + 2])) {
 
-        // $aMarkovChains[$sWord . ' ' . $aWords[$i + 1]][] = $aWords[$i + 2];
         $mkv_seq = $sWord . ' ' . $aWords[$i + 1];
         $next_word = $aWords[$i + 2];
 
@@ -26,22 +28,25 @@ class Markov  {
     return $aMarkovChains;
   }
 
-  private function initialize_markov() {
-    global $file_db;
+  private function initializeString() {
+    if($this->set == '') {
+    $sql = 'SELECT mkv_seq FROM mkv_words
+            WHERE SUBSTRING(mkv_seq, 1, 1) REGEXP BINARY \'[A-Z]\'
+            ORDER BY rand()'; // Incluir limit e fallback if none
+  } else {
+    $sql = 'SELECT mkv_seq FROM mkv_words
+            WHERE `set` = $this->set and SUBSTRING(mkv_seq, 1, 1) REGEXP BINARY \'[A-Z]\'
+            ORDER BY rand()'; // Incluir limit e fallback if none
+  }
 
-    // $sql = 'SELECT * FROM mkv_words WHERE substr(mkv_seq, 1, 1) GLOB(\'[A-Z]\') order by random()'; // Incluir limit e fallback if none
-    $sql = 'SELECT * FROM mkv_words WHERE SUBSTRING(mkv_seq, 1, 1) REGEXP BINARY \'[A-Z]\' order by rand()'; // Incluir limit e fallback if none
-
-
-
-    $data = $file_db->query($sql);
+    $data = $this->DB->query($sql);
     $data->setFetchMode(PDO::FETCH_ASSOC);
     $new_data = $data->fetch();
 
     return $new_data;
   }
 
-  private function trim_last_sentence($input, $max_chars) {
+  private function trimLastSentence($input, $max_chars) {
 
     $input = (string)S::create($input)->truncate($max_chars, '');
 
@@ -58,19 +63,14 @@ class Markov  {
   }
 
   public function generateText($max_chars = 280) {
-    global $file_db; //temp
-
-    //INITIALIZE WITH capital
-
     $string = NULL;
 
-    $initial = $this->initialize_markov();
+    $initial = $this->initializeString();
 
     $string .= $initial["mkv_seq"];
 
     // $bootstrap = str_word_count($initial["mkv_seq"], 1, '\'"-,.;:0123456789%?!');
     $bootstrap = explode(" ",$initial["mkv_seq"]);
-
 
     $new_seq = $bootstrap[1]." ".$initial["next_word"];
 
@@ -80,7 +80,7 @@ class Markov  {
 
       $sql_new_seq = 'SELECT * FROM mkv_words WHERE mkv_seq = "'.$new_seq.'" order by rand()';
 
-      $data_sq = $file_db->query($sql_new_seq);
+      $data_sq = $this->DB->query($sql_new_seq);
       $data_sq->setFetchMode(PDO::FETCH_ASSOC);
       $new_sq_data = $data_sq->fetch();
 
@@ -89,7 +89,6 @@ class Markov  {
 
       $string .= " ".$new_sq_data["next_word"];
 
-      // $new_seq = str_word_count($new_seq, 1, '\'"-,.;:0123456789%?!');
       $new_seq = explode(" ",$new_seq);
 
       $count_new_seq = count($new_seq);
@@ -101,12 +100,7 @@ class Markov  {
       if(strlen($string) > $max_chars) break;
 
     }
-
-
-    // var_dump($string);
-    // var_dump($this->trim_last_sentence($string,$max_chars));
-
-    $string = $this->trim_last_sentence($string,$max_chars);
+    $string = $this->trimLastSentence($string,$max_chars);
 
     return $string;
   }

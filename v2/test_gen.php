@@ -8,7 +8,14 @@ include __DIR__."/include/include_all.php";
 // var_dump($input);
 
 echo '<pre>';
+
+$start_time = microtime(TRUE);
+
 $markov = new Markov;
+// $markov->set = 'leis';
 var_dump($markov->generateText());
 
+$end_Time =  microtime(TRUE);
+
+echo "Gerado em: " .($end_Time - $start_time);
  ?>

@@ -30,18 +30,24 @@ class Markov  {
 
   private function initializeString() {
     if($this->set == '') {
-    $sql = 'SELECT mkv_seq FROM mkv_words
-            WHERE SUBSTRING(mkv_seq, 1, 1) REGEXP BINARY \'[A-Z]\'
-            ORDER BY rand()'; // Incluir limit e fallback if none
+      $sql = 'SELECT mkv_seq, next_word FROM mkv_words
+      WHERE SUBSTRING(mkv_seq, 1, 1) REGEXP BINARY \'[A-Z]\' and
+      CHAR_LENGTH(mkv_seq) > 3
+      ORDER BY rand() limit 1'; // Incluir limit e fallback if none
   } else {
-    $sql = 'SELECT mkv_seq FROM mkv_words
-            WHERE `set` = $this->set and SUBSTRING(mkv_seq, 1, 1) REGEXP BINARY \'[A-Z]\'
-            ORDER BY rand()'; // Incluir limit e fallback if none
+    $sql = 'SELECT mkv_seq, next_word FROM mkv_words
+    WHERE SUBSTRING(mkv_seq, 1, 1) REGEXP BINARY \'[A-Z]\' and
+    `set` like \'%'.$this->set.'%\' and
+    CHAR_LENGTH(mkv_seq) > 3
+    ORDER BY rand() limit 1'; // Incluir limit e fallback if none
   }
+  // var_dump($sql); //DEBUG
 
-    $data = $this->DB->query($sql);
+    $data = $this->db->conn->query($sql);
     $data->setFetchMode(PDO::FETCH_ASSOC);
     $new_data = $data->fetch();
+
+    // var_dump($new_data); //DEBUG
 
     return $new_data;
   }
@@ -62,7 +68,7 @@ class Markov  {
     return $input;
   }
 
-  public function generateText($max_chars = 280) {
+  public function generateText($max_chars = 280, $min_chars = 15) {
     $string = NULL;
 
     $initial = $this->initializeString();
@@ -76,23 +82,27 @@ class Markov  {
 
     $string .= " ".$initial["next_word"];
 
+    // var_dump($initial); //DEBUG
+
     for ($i=0; $i < 1000; $i++) {
 
-      $sql_new_seq = 'SELECT * FROM mkv_words WHERE mkv_seq = "'.$new_seq.'" order by rand()';
+      $sql_new_seq = 'SELECT * FROM mkv_words WHERE mkv_seq = "'.$new_seq.'" and `set` like \'%'.$this->set.'%\' order by rand() limit 1';
 
-      $data_sq = $this->DB->query($sql_new_seq);
+      // var_dump($sql_new_seq); //DEBUG
+
+
+      $data_sq = $this->db->conn->query($sql_new_seq);
       $data_sq->setFetchMode(PDO::FETCH_ASSOC);
       $new_sq_data = $data_sq->fetch();
 
-      $count_new_sq_data = count($new_sq_data);
-      if($count_new_sq_data == 0) break;
+      // $count_new_sq_data = count($new_sq_data);
+      if($new_sq_data == FALSE) break;
 
       $string .= " ".$new_sq_data["next_word"];
 
       $new_seq = explode(" ",$new_seq);
 
-      $count_new_seq = count($new_seq);
-      if($count_new_seq == 0) break;
+      if($new_seq == FALSE) break;
 
 
       $new_seq = $new_seq[1]." ".$new_sq_data["next_word"];
@@ -100,6 +110,9 @@ class Markov  {
       if(strlen($string) > $max_chars) break;
 
     }
+
+    if(strlen($string) < 10) $this->generateText($max_chars,$min_chars);
+
     $string = $this->trimLastSentence($string,$max_chars);
 
     return $string;

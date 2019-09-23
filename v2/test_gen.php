@@ -12,7 +12,7 @@ echo '<pre>';
 $start_time = microtime(TRUE);
 
 $markov = new Markov;
-// $markov->set = 'leis';
+$markov->set = 'leis';
 var_dump($markov->generateText());
 
 $end_Time =  microtime(TRUE);

@@ -56,7 +56,10 @@ $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 // Check if image file is a actual image or fake image
 $uploadOk = 1;
 
-var_dump($target_dir);
+
+$set_name = $_POST["set"];
+
+// var_dump($target_dir); //DEBUG
 
 if ($uploadOk == 0) {
     echo "Sorry, your file was not uploaded.";
@@ -65,19 +68,48 @@ if ($uploadOk == 0) {
     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
         echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
 
-
-
-      $files = (fsplit($target_file,$target_dir_split,512000));
-
-
+      $files = (fsplit($target_file,$target_dir_split,1024));
 
     } else {
         echo "Sorry, there was an error uploading your file.";
     }
 }
 
+$file_list = array();
+
+foreach ($files as $key => $value) {
+  $file_list[] = ['file' => $value,
+                  'set' => $set_name
+];
+}
+
+// var_dump(json_encode($file_list)); //DEBUG
+
+$json_file = __DIR__ . '/../files/file_list.json';
+
+$json_file_contents_on_file = file_get_contents($json_file);
+$json_file_contents_on_file = json_decode($json_file_contents_on_file);
+
+// var_dump($json_file_contents_on_file); //DEBUG
+// var_dump($file_list);
+
+if($json_file_contents_on_file != NULL) {
+  $json_file_contents = array_merge($file_list,$json_file_contents_on_file);
+} else {
+  // echo "Null"; //DEBUG
+  $json_file_contents = $file_list;
+}
+
+// var_dump($json_file_contents); //DEBUG
+
+$json_file_contents = json_encode($json_file_contents);
+
+file_put_contents($json_file,$json_file_contents);
 
 
+// Send File
+// Split File by N bytes (512k)
+// register at a json with a filename and set description
 
 
 ?>

@@ -12,7 +12,7 @@ echo '<pre>';
 
 
 
-$lock_location = __DIR__.'/files/lock_test.pid';
+$lock_location = __DIR__.'/files/lock_convert.pid';
 $lock_file = fopen($lock_location, 'c');
 $got_lock = flock($lock_file, LOCK_EX | LOCK_NB, $wouldblock);
 if ($lock_file === false || (!$got_lock && !$wouldblock)) {

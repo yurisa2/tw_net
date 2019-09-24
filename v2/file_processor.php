@@ -25,13 +25,13 @@ ftruncate($lock_file, 0);
 fwrite($lock_file, getmypid() . "\n");
 
 ///////////////////////////////////////////////////////////////////////////
+$files = __DIR__ . '/files/file_list.json';
 
 $file_list = file_get_contents($files);
 $file_list = json_decode($file_list);
 
 echo '<pre>';
 
-$files = __DIR__ . '/files/file_list.json';
 
 $db = new DB;
 

@@ -72,6 +72,9 @@ LIMIT 1
 
   private function trimLastSentence($input, $max_chars) {
 
+    // var_dump($input);
+    // exit;
+
     $input = (string)S::create($input)->truncate($max_chars, '');
 
     $idx_period = (string)S::create($input)->indexOfLast('.');
@@ -81,7 +84,7 @@ LIMIT 1
 
     $last_idx = max($idx_period,$idx_exp,$idx_int,$idx_ret);
 
-    $input = (string)S::create($input)->truncate($last_idx+1, '');
+if(is_numeric($last_idx))    $input = (string)S::create($input)->truncate($last_idx+1, '');
 
     return $input;
   }
@@ -155,6 +158,8 @@ LIMIT 1
     if(strlen($string) < 10) $this->generateText($max_chars,$min_chars);
 
     $string = $this->trimLastSentence($string,$max_chars);
+
+    $string = stripslashes($string);
 
     return $string;
   }

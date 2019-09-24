@@ -33,8 +33,19 @@ $content = [
 ];
 
 file_put_contents("files/tokens/".$user->screen_name.'.json',json_encode($content));
+$db = new DB;
 
-var_dump($user);
+$sql_user = 'INSERT into user_data (`service`, `screenname`,`token`,
+                                    `token_secret`) values
+                                    ("twitter", ?, ?, ?)' ;
+$data = $db->conn->prepare($sql_user);
+
+$data_entry = [ $user->screen_name,
+                $access_token['oauth_token'],
+                $access_token['oauth_token_secret']
+              ];
+
+$data->execute($data_entry);
 
 
  ?>

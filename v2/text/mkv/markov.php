@@ -29,17 +29,33 @@ class Markov  {
   }
 
   private function initializeString() {
-    if($this->set == '') {
-      $sql = 'SELECT mkv_seq, next_word FROM mkv_words
-      WHERE SUBSTRING(mkv_seq, 1, 1) REGEXP BINARY \'[A-Z]\' and
-      CHAR_LENGTH(mkv_seq) > 3
-      ORDER BY rand() limit 1'; // Incluir limit e fallback if none
+    if($this->set == '') { // Incluir limit e fallback if none
+      exit("No set defined");
   } else {
-    $sql = 'SELECT mkv_seq, next_word FROM mkv_words
-    WHERE SUBSTRING(mkv_seq, 1, 1) REGEXP BINARY \'[A-Z]\' and
-    `set` like \'%'.$this->set.'%\' and
-    CHAR_LENGTH(mkv_seq) > 3
-    ORDER BY rand() limit 1'; // Incluir limit e fallback if none
+    $sql = 'SELECT
+    mkv_seq, next_word, `set`
+FROM
+    mkv_words AS r1
+        JOIN
+    (SELECT
+        CEIL(RAND() * (SELECT
+                    MAX(id)
+                FROM
+                    mkv_words
+                WHERE
+                    `set` = \''.$this->set.'\'
+                    )
+		) AS id
+    ) AS r2
+WHERE
+    r1.id >= r2.id
+        AND                     `set` = \''.$this->set.'\'
+
+        AND SUBSTRING(mkv_seq, 1, 1) REGEXP BINARY \'[A-Z]\'
+		AND CHAR_LENGTH(mkv_seq) > 3
+ORDER BY r1.id ASC
+LIMIT 1
+'; // Incluir limit e fallback if none
   }
   // var_dump($sql); //DEBUG
 
@@ -47,7 +63,9 @@ class Markov  {
     $data->setFetchMode(PDO::FETCH_ASSOC);
     $new_data = $data->fetch();
 
+    // var_dump($sql); //DEBUG
     // var_dump($new_data); //DEBUG
+    // exit; //DEBUG
 
     return $new_data;
   }
@@ -86,7 +104,30 @@ class Markov  {
 
     for ($i=0; $i < 1000; $i++) {
 
-      $sql_new_seq = 'SELECT * FROM mkv_words WHERE mkv_seq = "'.$new_seq.'" and `set` like \'%'.$this->set.'%\' order by rand() limit 1';
+      $sql_new_seq = 'SELECT * FROM mkv_words WHERE mkv_seq = "'.$new_seq.'" and `set` = \''.$this->set.'\' order by rand() limit 1';
+      // $sql_new_seq = '
+      // SELECT
+      // *
+      // FROM
+      // mkv_words AS r1
+      //     JOIN
+      // (SELECT
+      //     CEIL(RAND() * (SELECT
+      //                 MAX(id)
+      //             FROM
+      //                 mkv_words
+      //             WHERE
+      //                 `set` = \''.$this->set.'\'
+      //                 )
+      // ) AS id
+      // ) AS r2
+      // WHERE
+      // r1.id >= r2.id
+      //     AND `set` = \''.$this->set.'\'
+      //     AND mkv_seq = "'.$new_seq.'"
+      //
+      // ORDER BY r1.id ASC
+      // ';
 
       // var_dump($sql_new_seq); //DEBUG
 

@@ -12,7 +12,7 @@ echo '<pre>';
 $start_time = microtime(TRUE);
 
 $markov = new Markov;
-$markov->set = 'lyrics%rock';
+$markov->set = ' Contos Eroticos, contoseroticos.com.br, sex, porn, portuguese';
 var_dump($markov->generateText());
 
 $end_Time =  microtime(TRUE);

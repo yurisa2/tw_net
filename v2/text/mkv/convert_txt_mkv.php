@@ -57,7 +57,7 @@ class ConvertMkv {
         $mkv_seq = addslashes($value["mkv_seq"]);
         $next_word = addslashes($value["next_word"]);
 
-        $insert_values .= "('".$mkv_seq."', '".$next_word."',' ".$input["set"]."'),";
+        $insert_values .= "('".$mkv_seq."', '".$next_word."','".$input["set"]."'),";
 
         if($j >= 400) {
           $this->sendChainsDB($insert,$insert_values);

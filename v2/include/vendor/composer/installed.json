@@ -56,53 +56,159 @@
         ]
     },
     {
-        "name": "dg/twitter-php",
-        "version": "v4.0",
-        "version_normalized": "4.0.0.0",
+        "name": "danielstjules/stringy",
+        "version": "3.1.0",
+        "version_normalized": "3.1.0.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/dg/twitter-php.git",
-            "reference": "e9b38579d71dbe2a23a491dd7591bb4be0bc7ca5"
+            "url": "https://github.com/danielstjules/Stringy.git",
+            "reference": "df24ab62d2d8213bbbe88cc36fc35a4503b4bd7e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/dg/twitter-php/zipball/e9b38579d71dbe2a23a491dd7591bb4be0bc7ca5",
-            "reference": "e9b38579d71dbe2a23a491dd7591bb4be0bc7ca5",
+            "url": "https://api.github.com/repos/danielstjules/Stringy/zipball/df24ab62d2d8213bbbe88cc36fc35a4503b4bd7e",
+            "reference": "df24ab62d2d8213bbbe88cc36fc35a4503b4bd7e",
             "shasum": ""
         },
         "require": {
-            "ext-curl": "*",
-            "ext-json": "*",
-            "php": ">=7.1"
+            "php": ">=5.4.0",
+            "symfony/polyfill-mbstring": "~1.1"
         },
-        "time": "2019-02-08T16:34:42+00:00",
+        "require-dev": {
+            "phpunit/phpunit": "~4.0"
+        },
+        "time": "2017-06-12T01:10:27+00:00",
         "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "4.0-dev"
-            }
-        },
         "installation-source": "dist",
         "autoload": {
-            "classmap": [
-                "src/"
+            "psr-4": {
+                "Stringy\\": "src/"
+            },
+            "files": [
+                "src/Create.php"
             ]
         },
         "notification-url": "https://packagist.org/downloads/",
         "license": [
-            "BSD-3-Clause"
+            "MIT"
         ],
         "authors": [
             {
-                "name": "David Grudl",
-                "homepage": "https://davidgrudl.com"
+                "name": "Daniel St. Jules",
+                "email": "danielst.jules@gmail.com",
+                "homepage": "http://www.danielstjules.com"
             }
         ],
-        "description": "Small and easy Twitter library for PHP",
-        "homepage": "https://github.com/dg/twitter-php",
+        "description": "A string manipulation library with multibyte support",
+        "homepage": "https://github.com/danielstjules/Stringy",
         "keywords": [
-            "oauth",
-            "twitter"
+            "UTF",
+            "helpers",
+            "manipulation",
+            "methods",
+            "multibyte",
+            "string",
+            "utf-8",
+            "utility",
+            "utils"
+        ]
+    },
+    {
+        "name": "facebook/graph-sdk",
+        "version": "5.7.0",
+        "version_normalized": "5.7.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/facebook/php-graph-sdk.git",
+            "reference": "2d8250638b33d73e7a87add65f47fabf91f8ad9b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/facebook/php-graph-sdk/zipball/2d8250638b33d73e7a87add65f47fabf91f8ad9b",
+            "reference": "2d8250638b33d73e7a87add65f47fabf91f8ad9b",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.4|^7.0"
+        },
+        "require-dev": {
+            "guzzlehttp/guzzle": "~5.0",
+            "mockery/mockery": "~0.8",
+            "phpunit/phpunit": "~4.0"
+        },
+        "suggest": {
+            "guzzlehttp/guzzle": "Allows for implementation of the Guzzle HTTP client",
+            "paragonie/random_compat": "Provides a better CSPRNG option in PHP 5"
+        },
+        "time": "2018-12-11T22:56:31+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "5.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Facebook\\": "src/Facebook/"
+            },
+            "files": [
+                "src/Facebook/polyfills.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "Facebook Platform"
+        ],
+        "authors": [
+            {
+                "name": "Facebook",
+                "homepage": "https://github.com/facebook/php-graph-sdk/contributors"
+            }
+        ],
+        "description": "Facebook SDK for PHP",
+        "homepage": "https://github.com/facebook/php-graph-sdk",
+        "keywords": [
+            "facebook",
+            "sdk"
+        ]
+    },
+    {
+        "name": "jmathai/php-multi-curl",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/jmathai/php-multi-curl.git",
+            "reference": "33c5d80128e6ea1e72a9440ffbdb8fab05a472da"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/jmathai/php-multi-curl/zipball/33c5d80128e6ea1e72a9440ffbdb8fab05a472da",
+            "reference": "33c5d80128e6ea1e72a9440ffbdb8fab05a472da",
+            "shasum": ""
+        },
+        "require-dev": {
+            "phpunit/phpunit": "4.0.*"
+        },
+        "time": "2016-12-03T03:27:02+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "JMathai\\PhpMultiCurl\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "Apache"
+        ],
+        "description": "A high performance PHP library for asynchronous curl http calls.",
+        "keywords": [
+            "asynchronous",
+            "curl",
+            "parallel",
+            "php-multi-curl"
         ]
     },
     {
@@ -164,102 +270,6 @@
             "polyfill",
             "portable",
             "shim"
-        ]
-    },
-    {
-        "name": "danielstjules/stringy",
-        "version": "3.1.0",
-        "version_normalized": "3.1.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/danielstjules/Stringy.git",
-            "reference": "df24ab62d2d8213bbbe88cc36fc35a4503b4bd7e"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/danielstjules/Stringy/zipball/df24ab62d2d8213bbbe88cc36fc35a4503b4bd7e",
-            "reference": "df24ab62d2d8213bbbe88cc36fc35a4503b4bd7e",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.4.0",
-            "symfony/polyfill-mbstring": "~1.1"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "~4.0"
-        },
-        "time": "2017-06-12T01:10:27+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Stringy\\": "src/"
-            },
-            "files": [
-                "src/Create.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Daniel St. Jules",
-                "email": "danielst.jules@gmail.com",
-                "homepage": "http://www.danielstjules.com"
-            }
-        ],
-        "description": "A string manipulation library with multibyte support",
-        "homepage": "https://github.com/danielstjules/Stringy",
-        "keywords": [
-            "UTF",
-            "helpers",
-            "manipulation",
-            "methods",
-            "multibyte",
-            "string",
-            "utf-8",
-            "utility",
-            "utils"
-        ]
-    },
-    {
-        "name": "jmathai/php-multi-curl",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/jmathai/php-multi-curl.git",
-            "reference": "33c5d80128e6ea1e72a9440ffbdb8fab05a472da"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/jmathai/php-multi-curl/zipball/33c5d80128e6ea1e72a9440ffbdb8fab05a472da",
-            "reference": "33c5d80128e6ea1e72a9440ffbdb8fab05a472da",
-            "shasum": ""
-        },
-        "require-dev": {
-            "phpunit/phpunit": "4.0.*"
-        },
-        "time": "2016-12-03T03:27:02+00:00",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "JMathai\\PhpMultiCurl\\": "src"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "Apache"
-        ],
-        "description": "A high performance PHP library for asynchronous curl http calls.",
-        "keywords": [
-            "asynchronous",
-            "curl",
-            "parallel",
-            "php-multi-curl"
         ]
     }
 ]

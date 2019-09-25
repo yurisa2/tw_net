@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "444988aee74c74c806df42e89b05e59b",
+    "content-hash": "6301c6e03ee7df5d8c6a374545bf4969",
     "packages": [
         {
             "name": "abraham/twitteroauth",
@@ -117,52 +117,62 @@
             "time": "2017-06-12T01:10:27+00:00"
         },
         {
-            "name": "dg/twitter-php",
-            "version": "v4.0",
+            "name": "facebook/graph-sdk",
+            "version": "5.7.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/dg/twitter-php.git",
-                "reference": "e9b38579d71dbe2a23a491dd7591bb4be0bc7ca5"
+                "url": "https://github.com/facebook/php-graph-sdk.git",
+                "reference": "2d8250638b33d73e7a87add65f47fabf91f8ad9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dg/twitter-php/zipball/e9b38579d71dbe2a23a491dd7591bb4be0bc7ca5",
-                "reference": "e9b38579d71dbe2a23a491dd7591bb4be0bc7ca5",
+                "url": "https://api.github.com/repos/facebook/php-graph-sdk/zipball/2d8250638b33d73e7a87add65f47fabf91f8ad9b",
+                "reference": "2d8250638b33d73e7a87add65f47fabf91f8ad9b",
                 "shasum": ""
             },
             "require": {
-                "ext-curl": "*",
-                "ext-json": "*",
-                "php": ">=7.1"
+                "php": "^5.4|^7.0"
+            },
+            "require-dev": {
+                "guzzlehttp/guzzle": "~5.0",
+                "mockery/mockery": "~0.8",
+                "phpunit/phpunit": "~4.0"
+            },
+            "suggest": {
+                "guzzlehttp/guzzle": "Allows for implementation of the Guzzle HTTP client",
+                "paragonie/random_compat": "Provides a better CSPRNG option in PHP 5"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.0-dev"
+                    "dev-master": "5.x-dev"
                 }
             },
             "autoload": {
-                "classmap": [
-                    "src/"
+                "psr-4": {
+                    "Facebook\\": "src/Facebook/"
+                },
+                "files": [
+                    "src/Facebook/polyfills.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD-3-Clause"
+                "Facebook Platform"
             ],
             "authors": [
                 {
-                    "name": "David Grudl",
-                    "homepage": "https://davidgrudl.com"
+                    "name": "Facebook",
+                    "homepage": "https://github.com/facebook/php-graph-sdk/contributors"
                 }
             ],
-            "description": "Small and easy Twitter library for PHP",
-            "homepage": "https://github.com/dg/twitter-php",
+            "description": "Facebook SDK for PHP",
+            "homepage": "https://github.com/facebook/php-graph-sdk",
             "keywords": [
-                "oauth",
-                "twitter"
+                "facebook",
+                "sdk"
             ],
-            "time": "2019-02-08T16:34:42+00:00"
+            "time": "2018-12-11T22:56:31+00:00"
         },
         {
             "name": "jmathai/php-multi-curl",

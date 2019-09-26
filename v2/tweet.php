@@ -59,7 +59,8 @@ if(rand(0,100) < $freq_rand) {
   $generic_data = json_encode(array('num_mkv_chains' => $markov->mkv_chains,
                                     'time' => ($end_Time - $start_time),
                                     'set' => $set
-));
+                                    )
+                              );
 
   $log = new DBOPS;
   $log->log_response($user_data[$pointer]["id"] ,json_encode($statues),$generic_data);

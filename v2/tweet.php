@@ -3,6 +3,9 @@ ini_set("display_errors",1);
 ini_set('max_execution_time', 3600);
 error_reporting(E_ALL);
 
+$start_time = microtime(TRUE);
+
+
 date_default_timezone_set('UTC');
 
 include __DIR__."/include/include_all.php";
@@ -66,8 +69,14 @@ if(rand(0,100) < $freq_rand) {
   $statues = $connection->post("statuses/update", ["status" => $markov->generateText()]);
   var_dump($statues);
 
+  $end_Time =  microtime(TRUE);
+
+  $generic_data = json_encode(array('num_mkv_chains' => $markov->mkv_chains,
+                                    'time' => ($end_Time - $start_time)
+));
+
   $log = new DBOPS;
-  $log->log_response($user_data[$pointer] ,$statues);
+  $log->log_response($user_data[$pointer]["id"] ,json_encode($statues),$generic_data);
 
 } else {
   exit("Freq DENIED");

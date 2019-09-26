@@ -90,6 +90,8 @@ if(is_numeric($last_idx))    $input = (string)S::create($input)->truncate($last_
   }
 
   public function generateText($max_chars = 280, $min_chars = 15) {
+    $this->mkv_chains = 1;
+
     $string = NULL;
 
     $initial = $this->initializeString();
@@ -106,6 +108,8 @@ if(is_numeric($last_idx))    $input = (string)S::create($input)->truncate($last_
     // var_dump($initial); //DEBUG
 
     for ($i=0; $i < 1000; $i++) {
+
+      $this->mkv_chains++;
 
       $sql_new_seq = 'SELECT * FROM mkv_words WHERE mkv_seq = "'.$new_seq.'" and `set` = \''.$this->set.'\' order by rand() limit 1';
       // $sql_new_seq = '

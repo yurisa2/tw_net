@@ -9,10 +9,10 @@ class DBOPS {
 
   }
 
-  public function log_response($user_data,$response) {
-    $sql_log = 'INSERT into `logs` (`link_user_data`, `response`) values (?, ?)' ;
-    $data = $db->conn->prepare($sql_log);
-    $data->execute(array($user_data, $response));
+  public function log_response($user_data,$response,$generic_data) {
+    $sql_log = 'INSERT into `logs` (`link_user_data`, `response`, `generic_data`) values (?, ?, ?)' ;
+    $data = $this->db->conn->prepare($sql_log);
+    $data->execute(array($user_data, $response, $generic_data));
   }
 
 }

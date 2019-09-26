@@ -5,14 +5,12 @@ error_reporting(E_ALL);
 
 $start_time = microtime(TRUE);
 
-
 date_default_timezone_set('UTC');
 
 include __DIR__."/include/include_all.php";
 
 $markov = new Markov;
 $db = new DB;
-
 
 echo '<pre>';
 $sql_userdata = 'SELECT * FROM user_data';
@@ -31,19 +29,6 @@ $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $user_data[$pointe
     $set = $datasets->datasets[array_rand($datasets->datasets)];
     // var_dump($datasets); //DEBUG
 } else { exit("No search set!");}
-
-// $array_se = ['datasets' => [
-// " Contos Eroticos, contoseroticos.com.br, sex, porn, portuguese"
-//
-//
-// ],
-//              'hashtags' => ["#safadinho", "porn", "#contoseroticos", "#contoerotico"]
-// ];
-//
-// $array_json = json_encode($array_se);
-// var_dump($array_json);
-
-// exit;
 
 $markov->set = $set;
 
@@ -72,7 +57,8 @@ if(rand(0,100) < $freq_rand) {
   $end_Time =  microtime(TRUE);
 
   $generic_data = json_encode(array('num_mkv_chains' => $markov->mkv_chains,
-                                    'time' => ($end_Time - $start_time)
+                                    'time' => ($end_Time - $start_time),
+                                    'set' => $set
 ));
 
   $log = new DBOPS;

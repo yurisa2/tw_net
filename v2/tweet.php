@@ -66,6 +66,9 @@ if(rand(0,100) < $freq_rand) {
   $statues = $connection->post("statuses/update", ["status" => $markov->generateText()]);
   var_dump($statues);
 
+  $log = new DBOPS;
+  $log->log_response($user_data[$pointer] ,$statues);
+
 } else {
   exit("Freq DENIED");
 }

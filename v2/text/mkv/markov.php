@@ -38,7 +38,7 @@ FROM
     mkv_words AS r1
         JOIN
     (SELECT
-        CEIL(RAND() * (SELECT
+        CEIL(RAND('.rand().') * (SELECT
                     MAX(id)
                 FROM
                     mkv_words

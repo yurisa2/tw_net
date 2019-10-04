@@ -54,6 +54,9 @@ class ConvertMkv {
       $this->db->conn->beginTransaction();
       foreach ($arr_mkv as $key => $value) {
 
+        $mkv_seq = strip_tags($mkv_seq);
+        $next_word = strip_tags($next_word);
+
         $mkv_seq = addslashes($value["mkv_seq"]);
         $next_word = addslashes($value["next_word"]);
 

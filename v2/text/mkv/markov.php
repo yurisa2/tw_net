@@ -53,7 +53,7 @@ WHERE
 
         AND SUBSTRING(mkv_seq, 1, 1) REGEXP BINARY \'[A-Z]\'
 		AND CHAR_LENGTH(mkv_seq) > 3
-ORDER BY r1.id ASC
+ORDER BY rand()
 LIMIT 1
 '; // Incluir limit e fallback if none
   }

@@ -12,7 +12,13 @@ class Model_User extends DB {
     // $data_sq->setFetchMode(PDO::FETCH_ASSOC);
     $user_data = $data_sq->fetchAll();
 
-    return $user_data;
+    $user_data_new_index = array();
+
+    foreach ($user_data as $key => $value) {
+      $user_data_new_index[$value['id']] = $value;
+    }
+
+    return $user_data_new_index;
   }
 
 

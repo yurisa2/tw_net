@@ -16,25 +16,22 @@ $twit = new Controller_Twitter;
 
 
 echo '<pre>';
+//
+// $meutw = $twit->rate_tweets("Charlotte69fr");
+// asort($meutw);
+// var_dump($meutw);
+// var_dump(array_key_first($meutw));
 
-$meutw = $twit->rate_tweets("");
-asort($meutw);
-var_dump($meutw);
-var_dump(array_key_first($meutw));
 
-// foreach ($meutw as $key => $value) {
-//   echo 'id '.$value->id.'<br>';
-//
-//   echo 'favorite_count '.$value->favorite_count.'<br>';
-//   echo 'retweet_count '.$value->retweet_count.'<br>';
-//
-//   echo 'In Reply '.$value->in_reply_to_status_id.'<br>';
-//   echo 'retweeted '.$value->retweeted.'<br>';
-//   echo 'favorited '.$value->favorited.'<br>';
-//
-//   echo 'Text '.$value->text.'<br>';
-//   var_dump($value);
-//   break;
-// }
+// $user->select_user_by_id(14);
+$user->select_user_by_sn("yurisa2");
+
+
+
+var_dump($ht_num);
+var_dump($hashtags);
+
+
+// var_dump($user);
 
  ?>

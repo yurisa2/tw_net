@@ -34,10 +34,10 @@ class Controller_Twitter extends Controller_User {
   }
 
 
-  public function rate_tweets($screen_name, $rt=FALSE, $like=FALSE) {
+  public function rate_tweets($screen_name, $tw_list=NULL, $rt=FALSE, $like=FALSE) {
     if(!isset($this->connection)) $this->initialize();
 
-    $tw_list = $this->get_tweets($screen_name);
+    if(is_null($tw_list)) $tw_list = $this->get_tweets($screen_name);
 
     $new_list = array();
 

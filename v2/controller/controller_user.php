@@ -17,12 +17,28 @@ class Controller_User extends Model_User {
     return $user;
   }
 
-  public function select_user($user_id) {
+  public function select_user_by_id($tw_user_id) {
     $all_users = $this->get_users();
 
-    $user = $all_users[$user_id];
+    $user = $all_users[$tw_user_id];
 
     $this->selected_user = $user;
+
+    return $user;
+  }
+
+  public function select_user_by_sn($tw_screen_name) { //USE WITH CAUTION
+    $all_users = $this->get_users();
+    $user = NULL;
+
+    foreach ($all_users as $key => $value) {
+      if($value["screenname"] == $tw_screen_name) {
+        $user = $value;
+        break;
+      }
+    }
+
+    if(!is_null($user)) $this->selected_user = $user;
 
     return $user;
   }
@@ -42,6 +58,29 @@ class Controller_User extends Model_User {
     return $set;
   }
 
+  public function get_user_search_people() {
+    if(!isset($this->selected_user)) $this->select_random_user();
+    $people = NULL;
+
+    $search = $this->selected_user["search"];
+    $search = json_decode($search);
+
+    if(isset($search->people)) $people = $search->people;
+
+    return $people;
+  }
+
+  public function get_user_hashtags() {
+    if(!isset($this->selected_user)) $this->select_random_user();
+    $hashtags = NULL;
+
+    $search = $this->selected_user["search"];
+    $search = json_decode($search);
+
+    if(isset($search->hashtags)) $hashtags = $search->hashtags;
+
+    return $hashtags;
+  }
 
 
 }

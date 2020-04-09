@@ -37,6 +37,25 @@ if($freq->get_permit($user->selected_user)) {
 
   $end_Time =  microtime(TRUE);
 
+  // Add Hashtags if possible
+
+  $txt_len = strlen($tw_text);
+
+  $ht_num = rand(0, count($user->get_user_hashtags())-1);
+
+  $hashtags = NULL;
+
+    for ($i=0; $i <= $ht_num; $i++) {
+      if(rand(0,1) == 1) $hashtags .= ' '.$user->get_user_hashtags()[$i];
+    }
+
+  $total_len = $txt_len + strlen($hashtags);
+
+  if(!is_null($hashtags) && $total_len < 280) $tw_text = $tw_text . $hashtags;
+
+  // End of hashtags
+
+
   $generic_data = json_encode(array('num_mkv_chains' => $markov->mkv_chains,
                                     'time' => ($end_Time - $start_time),
                                     'set' => $markov->set

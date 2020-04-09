@@ -10,60 +10,45 @@ date_default_timezone_set('UTC');
 include __DIR__."/include/include_all.php";
 
 $markov = new Markov;
-$db = new DB;
+
+$user = new Controller_User;
+$freq = new Controller_Frequency;
+$twit = new Controller_Twitter;
+
 
 echo '<pre>';
-$sql_userdata = 'SELECT * FROM user_data';
-$data_sq = $db->conn->query($sql_userdata);
-// $data_sq->setFetchMode(PDO::FETCH_ASSOC);
-$user_data = $data_sq->fetchAll();
 
-$pointer = array_rand($user_data);
+// var_dump($user->select_random_dataset());
+// var_dump($user->selected_user);
+// exit;
 
-use Abraham\TwitterOAuth\TwitterOAuth;
-$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $user_data[$pointer]["token"],  $user_data[$pointer]["token_secret"]);
+$markov->set = $user->select_random_dataset();
 
-  if($user_data[$pointer]["search"] != NULL) {
-    $datasets = json_decode($user_data[$pointer]["search"]);
-    // var_dump($datasets->datasets[array_rand($datasets->datasets)]); //DEBUG
-    $set = $datasets->datasets[array_rand($datasets->datasets)];
-    // var_dump($datasets); //DEBUG
-} else { exit("No search set!");}
+// use Abraham\TwitterOAuth\TwitterOAuth;
+// $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $user->selected_user["token"],  $user->selected_user["token_secret"]);
+//
 
-$markov->set = $set;
+var_dump($freq->get_permit($user->selected_user));
+// exit;
 
-// GET THE FREQUENCIMETER
-$h_now = date("G");
+if($freq->get_permit($user->selected_user)) {
 
-if($h_now >= $user_data[$pointer]["time_in"] && $h_now <= $user_data[$pointer]["time_out"]) {
-  $freq_rand = $user_data[$pointer]["freq_in"];
-  echo "Time In <br>";
-} else {
-  echo "Time Out <br>";
-  $freq_rand = $user_data[$pointer]["freq_out"];
-}
-
-if(rand(0,100) < $freq_rand) {
-  echo "Time authorized";
-  for ($i=0; $i < 10; $i++) {
-    $status = $markov->generateText();
-    if(strlen($status) > 10) break;
-  }
-  // var_dump($status); //DEBUG
-  // exit; //DEBUG
-  $statues = $connection->post("statuses/update", ["status" => $markov->generateText()]);
-  var_dump($statues);
+  $tw_text =  $markov->generateText();
 
   $end_Time =  microtime(TRUE);
 
   $generic_data = json_encode(array('num_mkv_chains' => $markov->mkv_chains,
                                     'time' => ($end_Time - $start_time),
-                                    'set' => $set
+                                    'set' => $markov->set
                                     )
                               );
 
-  $log = new DBOPS;
-  $log->log_response($user_data[$pointer]["id"] ,json_encode($statues),$generic_data);
+   $twit->selected_user = $user->selected_user;
+   $twit->generic_data = $generic_data;
+   $twit->tweet($tw_text);
+
+   var_dump($twit->last_response);
+
 
 } else {
   exit("Freq DENIED");

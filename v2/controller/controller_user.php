@@ -32,10 +32,10 @@ class Controller_User extends Model_User {
     $user = NULL;
 
     foreach ($all_users as $key => $value) {
-      // var_dump($value["screenname"]);
 
 
       if($value["screenname"] == $tw_screen_name) {
+        // var_dump($value["screenname"]);
         $user = $value;
         break;
       }

@@ -10,7 +10,6 @@ date_default_timezone_set('UTC');
 include __DIR__."/include/include_all.php";
 
 
-$user = new Controller_User;
 $freq = new Controller_Frequency;
 $twit = new Controller_Twitter;
 
@@ -19,17 +18,19 @@ echo '<pre>';
 //
 
 
-// $user->select_user_by_id(14);
-$user->select_user_by_sn($_GET["screenname"]);
+// $twit->select_user_by_id(14);
+$twit->select_user_by_sn($_GET["screenname"]);
+
+// var_dump($twit->selected_user);
 
 $debug = NULL;
 
 if(isset($_GET["debug"])) $debug = $_GET["debug"];
 
 
-if($freq->get_permit($user->selected_user) || $debug == '1234') {
+if($freq->get_permit($twit->selected_user) || $debug == '1234') {
 
-  $search_people = $user->get_user_search_people();
+  $search_people = $twit->get_user_search_people();
 
   // var_dump($search_people);
   // var_dump(!is_null($search_people)); exit;

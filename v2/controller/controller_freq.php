@@ -2,12 +2,6 @@
 
 class Controller_Frequency {
 
-  public function connect_user_controller() { // Not Yet Used
-
-    $this->controller_user = new Controller_User;
-
-  }
-
   public function get_time_condition($user_data) {
     $h_now = date("G");
 

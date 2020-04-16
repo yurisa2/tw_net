@@ -42,8 +42,11 @@ class Controller_Twitter extends Controller_User {
     $new_list = array();
 
     foreach ($tw_list as $key => $value) {
+      // var_dump(isset($value->retweeted_status));
+      // var_dump($value->retweeted_status);
       if($value->retweeted == $rt &&
           $value->favorited == $like &&
+          isset($value->retweeted_status) == FALSE &&
           $value->in_reply_to_status_id == NULL) {
 
             $new_list[$value->id] =  $value->favorite_count + $value->retweet_count;
@@ -57,6 +60,19 @@ class Controller_Twitter extends Controller_User {
     if(!isset($this->connection)) $this->initialize();
 
     $response = $this->connection->post("statuses/retweet", ["id" => $id]);
+
+    $this->last_response = $response;
+
+    $this->log_action($this->generic_data, $response);
+  }
+
+
+  public function like($id) {
+    if(!isset($this->connection)) $this->initialize();
+
+    $response = $this->connection->post("favorites/create", ["id" => $id]);
+
+    $this->last_response = $response;
 
     $this->log_action($this->generic_data, $response);
   }

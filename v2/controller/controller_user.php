@@ -32,14 +32,20 @@ class Controller_User extends Model_User {
     $user = NULL;
 
     foreach ($all_users as $key => $value) {
+      // var_dump($value["screenname"]);
+
+
       if($value["screenname"] == $tw_screen_name) {
         $user = $value;
         break;
       }
     }
 
-    if(!is_null($user)) $this->selected_user = $user;
-
+    if(!is_null($user)) {
+      $this->selected_user = $user;
+    } else {
+      exit("No User Selected");
+    }
     return $user;
   }
 

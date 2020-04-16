@@ -11,27 +11,26 @@ include __DIR__."/include/include_all.php";
 
 $markov = new Markov;
 
-$user = new Controller_User;
 $freq = new Controller_Frequency;
 $twit = new Controller_Twitter;
 
 
 echo '<pre>';
 
-// var_dump($user->select_random_dataset());
-// var_dump($user->selected_user);
+// var_dump($twit->select_random_dataset());
+// var_dump($twit->selected_user);
 // exit;
-$user->select_user_by_sn($_GET["screenname"]);
-$markov->set = $user->select_random_dataset();
+$twit->select_user_by_sn($_GET["screenname"]);
+$markov->set = $twit->select_random_dataset();
 
 // use Abraham\TwitterOAuth\TwitterOAuth;
-// $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $user->selected_user["token"],  $user->selected_user["token_secret"]);
+// $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $twit->selected_user["token"],  $twit->selected_user["token_secret"]);
 //
 
-var_dump($freq->get_permit($user->selected_user));
+var_dump($freq->get_permit($twit->selected_user));
 // exit;
 
-if($freq->get_permit($user->selected_user)) {
+if($freq->get_permit($twit->selected_user)) {
 
   $tw_text =  $markov->generateText();
 
@@ -41,12 +40,12 @@ if($freq->get_permit($user->selected_user)) {
 
   $txt_len = strlen($tw_text);
 
-  $ht_num = rand(0, count($user->get_user_hashtags())-1);
+  $ht_num = rand(0, count($twit->get_user_hashtags())-1);
 
   $hashtags = NULL;
 
     for ($i=0; $i <= $ht_num; $i++) {
-      if(rand(0,1) == 1) $hashtags .= ' '.$user->get_user_hashtags()[$i];
+      if(rand(0,1) == 1) $hashtags .= ' '.$twit->get_user_hashtags()[$i];
     }
 
   $total_len = $txt_len + strlen($hashtags);
@@ -62,7 +61,7 @@ if($freq->get_permit($user->selected_user)) {
                                     )
                               );
 
-   $twit->selected_user = $user->selected_user;
+   $twit->selected_user = $twit->selected_user;
    $twit->generic_data = $generic_data;
    $twit->tweet($tw_text);
 

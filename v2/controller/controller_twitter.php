@@ -83,6 +83,16 @@ class Controller_Twitter extends Controller_User {
     $log->log_response($this->selected_user["id"] ,json_encode($response),$generic_data);
   }
 
+  public function get_friends($screen_name) {
+    if(!isset($this->connection)) $this->initialize();
+
+    $response = $this->connection->get("friends/list",
+                                        ["screen_name" => $screen_name,
+                                          "count" => 200]);
+
+    return $response;
+  }
+
 }
 
 

@@ -15,8 +15,6 @@ $twit = new Controller_Twitter;
 
 
 echo '<pre>';
-//
-
 
 // $twit->select_user_by_id(14);
 $twit->select_user_by_sn($_GET["screenname"]);
@@ -39,13 +37,8 @@ if($freq->get_permit($twit->selected_user) || $debug == '1234') {
   if(!is_null($search_people)) {
 
     $meutw = $twit->rate_tweets($search_people[array_rand($search_people)]);
-    // $meutw = $twit->rate_tweets('pewdiepie');
     asort($meutw);
-
     $least_rated = array_key_first($meutw);
-
-    // var_dump($meutw);
-    // var_dump($least_rated);
 
     $generic_data = json_encode(array('like_id' => $least_rated));
 
@@ -54,10 +47,23 @@ if($freq->get_permit($twit->selected_user) || $debug == '1234') {
       $twit->generic_data = $generic_data;
       $twit->like($least_rated);
       var_dump($twit->last_response);
+    } else {
+      echo "No Rated tweets";
+
+      $friends_list = $twit->get_friends($twit->selected_user["screenname"])->users;
+      $friend_screenname = $friends_list[array_rand($friends_list)]->screen_name;
+
+      $meutw = $twit->rate_tweets($friend_screenname);
+      asort($meutw);
+      $least_rated = array_key_first($meutw);
+
+      $generic_data = json_encode(array('like_id' => $least_rated));
+
+      $twit->generic_data = $generic_data;
+      $twit->like($least_rated);
+      var_dump($twit->last_response);
+
     }
-    else echo "No Rated tweets";
-
-
   } else {
     echo "no Search People";
   }

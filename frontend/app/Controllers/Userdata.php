@@ -8,12 +8,23 @@ class Userdata extends Controller {
 
   public function index()
   {
-    echo 'Hello World!';
+    // echo 'Hello World!';
 
     $userModel = new UserModel();
-    echo '<pre>';
-    var_dump($userModel->listar());
 
+    // var_dump($userModel);
+
+    $data = [
+     'users' => $userModel->paginate(10),
+     'pager' => $userModel->pager
+ ];
+
+
+ 
+// echo '<pre>';
+//  var_dump($data);
+
+         echo view('users/index', $data);
 
 
   }

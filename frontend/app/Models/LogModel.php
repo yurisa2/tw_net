@@ -9,22 +9,7 @@ class LogModel extends Model
   protected $primaryKey = 'id';
 
   protected $returnType = 'array';
-  protected $useSoftDeletes = true;
 
-  public function __construct() {
-    $this->db = \Config\Database::connect();
-
-
-  }
-
-
-  public function listar (){
-
-    $query   = $this->db->query('SELECT * FROM logs');
-    $results = $query->getResult();
-
-    return $results;
-  }
 
 }
 

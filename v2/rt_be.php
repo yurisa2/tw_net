@@ -49,8 +49,21 @@ if($freq->get_permit($twit->selected_user) || $debug == '1234') {
       $twit->retweet($least_rated);
       var_dump($twit->last_response);
     }
-    else echo "No Rated tweets";
+    else {
+    echo "No Rated tweets";
+    $friends_list = $twit->get_friends($twit->selected_user["screenname"])->users;
+    $friend_screenname = $friends_list[array_rand($friends_list)]->screen_name;
 
+    $meutw = $twit->rate_tweets($friend_screenname);
+    asort($meutw);
+    $least_rated = array_key_first($meutw);
+
+    $generic_data = json_encode(array('rt_id' => $least_rated));
+
+    $twit->generic_data = $generic_data;
+    $twit->retweet($least_rated);
+    var_dump($twit->last_response);
+}
 
   } else {
     echo "no Search People";

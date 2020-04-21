@@ -59,6 +59,8 @@ LIMIT 1
   }
   // var_dump($sql); //DEBUG
 
+    file_put_contents('initialize.sql', $sql);
+
     $data = $this->db->conn->query($sql);
     $data->setFetchMode(PDO::FETCH_ASSOC);
     $new_data = $data->fetch();

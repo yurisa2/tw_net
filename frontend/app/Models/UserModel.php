@@ -10,7 +10,8 @@ class UserModel extends Model
 
   protected $returnType = 'array';
 
-
+protected $allowedFields = ['service', 'screenname', 'token', 'token_secret', 'search',
+                            'time_in', 'time_out', 'freq_in', 'freq_out'];
 }
 
 ?>

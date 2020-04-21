@@ -1,20 +1,18 @@
 <?= $this->extend('default_layout') ?>
 <?= $this->section('content') ?>
+<?php
+$table = new \CodeIgniter\View\Table();
+
+$template = [
+        'table_open' => '<table id="simple-table" class="table  table-bordered table-hover width=100%">'];
+
+$table->setTemplate($template);
 
 
-    <?php
-//    var_dump($log);
-
-    // echo '<pre>';
-    // var_dump($log);
+$table->setHeading('Id', 'Link User', 'Date', 'Response', 'Generic Data');
+echo $table->generate($log);
 
 
-
-    foreach ($log as $key => $value) {
-
-    }
-
-     ?>
-
-<?= $pager->links() ?>
-<?= $this->endSection() ?>
+?>
+  <?= $pager->links() ?>
+  <?= $this->endSection() ?>

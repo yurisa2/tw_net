@@ -145,7 +145,7 @@
 			<div class="footer-inner">
 				<div class="footer-content">
 					<span class="bigger-120">
-									Copyright � phpflow.com. All rights reserved.
+									Copyright @yurisa2 - sa2.com.br . All rights reserved.
 					</span>
 				</div>
 			</div>
@@ -157,7 +157,7 @@
 	</div><!-- /.main-container -->
 
 	<!-- basic scripts -->
-	<script type="text/javascript" src="<?php echo base_url("js/jquery.min.js");?>"></script>
+	<script type="text/javascript" src="<?php echo base_url("js/jquery-2.1.4.min.js");?>"></script>
 	<script src="<?php echo base_url("js/bootstrap.min.js");?>"></script>
 </body>
 </html>
